@@ -1,0 +1,61 @@
+package main;
+
+import java.util.List;
+import java.util.Map;
+
+public class Задача2 {
+    /*
+    Tаблица c сотрудниками представлена в формате List<Map<String,String>>,
+    где каждый элемент List - строка с одним сотрудником. Соответсвенно, вся таблица - это "список из списков".
+    То есть сама таблица имеет форму: List <List<Map<String,String>>>,  где каждый ее элемент (List<Map<String,String>>)
+    - отдельный сотрудник.
+    В связи с этим, все написанные методы принимают на вход таблицу с формата  List <List<Map<String,String>>> .
+     */
+
+    public static void main(String[] args) {
+        findAllUnderThirty( table);
+        findAllPaidByRubels(table);
+        averageAge(table);
+    }
+
+    private static void findAllUnderThirty (List <List<Map<String,String>>> table) {
+        for (List<Map<String,String>>  employee :  table ) {
+            for (Map<String,String> Parameter : employee) {
+                if (Parameter.containsKey("Возраст")) {
+                    int age = Integer.parseInt(Parameter.get("Возраст"));
+                    if (age < 30) {
+                        String name = Parameter.get("Имя");
+                        System.err.println(name);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void findAllPaidByRubels(List <List<Map<String,String>>> table) {
+        for (List<Map<String,String>>  employee :  table ) {
+            for (Map<String,String> parameter : employee) {
+                if (parameter.containsKey("Зарплата")) {
+                    String salary = parameter.get("Зарплата");
+                    if (salary.contains("руб")) {
+                        String name = parameter.get("Имя");
+                        System.err.println(name);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void averageAge(List <List<Map<String,String>>> table) {
+        float totalAge = 0;
+        for (List<Map<String,String>>  employee :  table ) {
+            for (Map<String,String> parameter : employee) {
+                if (parameter.containsKey("Возраст")) {
+                    totalAge += Float.parseFloat(parameter.get("Возраст"));
+                }
+            }
+        }
+        // Срдений возраст определяется как сумма возрастов всех работников деленная на количество работников.
+        System.err.println("Средний возраст сотрудников: " + totalAge / table.size() + " лет");
+    }
+}
