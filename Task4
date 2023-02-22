@@ -1,0 +1,66 @@
+    /** В начале определяется 4 вершины, из которых идут диагонали куба,
+     * а координаты этих вершин сохраняются в массиве (peaksOfCube).
+     * После определения вершин происходит построение диагоналей из этих точек.**/
+
+    public static int findSecondMaxValue(int [] [] [] arr) {
+        int [][] peaksOfCube = new int[4][3]; // (4 вершины и у каждой 3 координаты (x,y,z))
+        peaksOfCube[1][0] = arr.length - 1;
+        peaksOfCube[2][1] = arr.length - 1;
+        peaksOfCube[3][0] = arr.length - 1;
+        peaksOfCube[3][1] = arr.length - 1;
+
+        List<Integer> xCoordinates = new ArrayList<>(); // x - Кординаты всех диогоналей
+        List<Integer> yCoordinates = new ArrayList<>();//  y - Кординаты всех диогоналей
+        List<Integer> zCoordinates = new ArrayList<>();//  z - Кординаты всех диогоналей
+
+
+        for (int peak = 0; peak < peaksOfCube.length; peak++) {
+            int xPosition = peaksOfCube[peak][0];
+            int yPosition = peaksOfCube[peak][1];
+            int zPosition = peaksOfCube[peak][2];
+
+            if (xPosition == 0) {
+                for (int s = xPosition; s < arr.length; s++) {
+                    xCoordinates.add(s);
+                }
+            } else {
+                for (int s = xPosition; s >= 0; s--) {
+                    xCoordinates.add(s);
+                }
+            }
+
+            if (yPosition == 0) {
+                for (int s = yPosition; s < arr.length; s++) {
+                    yCoordinates.add(s);
+                }
+            } else {
+                for (int s = yPosition; s >= 0; s--) {
+                    yCoordinates.add(s);
+                }
+            }
+
+            if (zPosition == 0) {
+                for (int s = zPosition; s < arr.length; s++) {
+                    zCoordinates.add(s);
+                }
+            } else {
+                for (int s = zPosition; s >= 0; s--) {
+                    zCoordinates.add(s);
+                }
+            }
+        }
+
+        List <Integer> allValues = new ArrayList<>();
+        for (int x = 0; x < 4 * arr.length; x ++) {
+            allValues.add(
+                    arr
+                            [xCoordinates.get(x)]
+                            [yCoordinates.get(x)]
+                            [zCoordinates.get(x)]
+            );
+        }
+
+        Collections.sort(allValues);
+        Collections.reverse(allValues);
+        return allValues.get(1); //Получение второго по величине элемента
+    }
