@@ -1,0 +1,42 @@
+    /** Метод заполняет двухмерный массив двумя одинаковыми действиями:
+     * сначала заполняется верхняя половина сверху вниз,
+     * после чего заполняется нижняя снизу вверх.
+     * Деление на половины осущестивляется по диагонали.**/
+     
+    public static void fillArray (int [][] array) {
+
+        int column = 0; // Вернхние начальные точки заполнения
+        int row = 0;
+
+        for (int value = array.length / 2 - 1; value > -1; value--) {
+            for (int line = column; line < array.length; line++) {
+                array[line][row] = value;
+            }
+
+            for (int line = row; line < array.length; line++) {
+                array[column][line] = value;
+            }
+            column++;
+            row++;
+        }
+
+        int column1 = array.length -1; //Нижние начальные точки заполнения
+        int row1 = array.length -1;
+        int limit = 0;
+
+        for (int value = array.length / 2 - 1; value > -1; value--) {
+            for ( int pos = row1; pos >= limit; pos --) {
+                array[column1][pos] = value;
+            }
+
+            for (int line = column1; line > limit; line --) {
+                array[line][row1] = value;
+            }
+            column1--;
+            row1--;
+            limit++;
+        }
+
+        Arrays.stream(array).map(Arrays::toString).forEach(System.out::println);
+
+    }
